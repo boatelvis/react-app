@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
+import styled from '@emotion/styled';
 
 //Create component for pokemonrow
 const PokemonRow = ({ pokemon, onSelect }) => (
@@ -8,8 +9,8 @@ const PokemonRow = ({ pokemon, onSelect }) => (
     <td>{pokemon.name.english}</td>
     <td>{pokemon.type.join(', ')}</td>
     <td>
-      <button 
-      onClick={() => onSelect(pokemon)}>Select Pokemon</button>
+      <Button 
+      onClick={() => onSelect(pokemon)}>Select Pokemon</Button>
     </td>
   </tr>
 );
@@ -26,7 +27,7 @@ PokemonRow.propTypes = {
 
 const PokemonInfo = ({ name, base }) => (
   <div>
-    <h1>{name.english}</h1>
+    <Title primary>{name.english}</Title>
     <table>
       {
         Object.keys(base).map((key) => (
@@ -54,6 +55,33 @@ PokemonInfo.propTypes = {
   }),
 }
 
+const Title = styled.h1`
+  text-align: ${props => (props.primary ? 'justify' : 'start')};
+  color: ${props => (props.primary ? 'hotpink' : 'turquoise')};
+`
+
+const ColumnLayout = styled.div`
+  display: grid;
+  grid-template-columns: 80% 20%;
+  grid-column-gap: 1rem;
+`
+
+const Container = styled.div`
+  margin: auto;
+  width: 900px;
+  padding-top: 1rem;
+`
+
+const Input = styled.input`
+  width: 100%;
+  font-size: x-large;
+`
+
+const Button = styled.button`
+  border: 1px solid hotpink;
+  color: turquoise;
+`
+
 function App() {
   const [search, searchSet] = React.useState("");
   const [pokemon, pokemonSet] = React.useState([]);
@@ -64,24 +92,13 @@ function App() {
     .then((resp) => resp.json())
     .then((data) => pokemonSet(data));
   }, []);
+
   return (
-    <div
-      style={{
-        margin: "auto",
-        width: 800,
-        paddingTop: "1rem"
-      }}
-    >
-      <h1 className="title">Pokemon Search</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "70% 30%",
-          gridColumnGap: "1rem",
-        }}
-      >
+    <Container>
+      <Title>Pokemon Search</Title>
+      <ColumnLayout>
         <div>
-          <input 
+          <Input 
             value={search}
             onChange={(e) => searchSet(e.target.value)}
           />
@@ -104,8 +121,8 @@ function App() {
         {selectPokemon && (
           <PokemonInfo {...selectPokemon} />
         )}
-      </div>
-    </div>
+      </ColumnLayout>
+    </Container>
   );
 }
 
