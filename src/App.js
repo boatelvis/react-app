@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import styled from '@emotion/styled';
+import Button from '@mui/material/Button';
 
 //Create component for pokemonrow
 const PokemonRow = ({ pokemon, onSelect }) => (
@@ -9,7 +10,7 @@ const PokemonRow = ({ pokemon, onSelect }) => (
     <td>{pokemon.name.english}</td>
     <td>{pokemon.type.join(', ')}</td>
     <td>
-      <Button 
+      <Button variant="outlined" 
       onClick={() => onSelect(pokemon)}>Select Pokemon</Button>
     </td>
   </tr>
@@ -75,11 +76,6 @@ const Container = styled.div`
 const Input = styled.input`
   width: 100%;
   font-size: x-large;
-`
-
-const Button = styled.button`
-  border: 1px solid hotpink;
-  color: turquoise;
 `
 
 function App() {
